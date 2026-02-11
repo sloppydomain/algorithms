@@ -1,4 +1,4 @@
-struct FenwickTree {
+class FenwickTree {
   vector<long long> fenw;
   int n;
 
