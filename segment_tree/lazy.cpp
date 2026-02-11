@@ -98,6 +98,22 @@ struct seg_tree {
     pull(node);
   }
 
+  long long range_min(int node, int l, int r, int ql, int qr) {
+    push(node, l, r);
+    if (r < ql || qr < l) return LLONG_MAX;
+    if (ql <= l && r <= qr) return mn[node];
+    int mid = (l + r) / 2;
+    return min(range_min(2 * node + 1, l, mid, ql, qr), range_min(2 * node + 2, mid + 1, r, ql, qr));
+  }
+  
+  long long range_max(int node, int l, int r, int ql, int qr) {
+    push(node, l, r);
+    if (r < ql || qr < l) return LLONG_MIN;
+    if (ql <= l && r <= qr) return mx[node];
+    int mid = (l + r) / 2;
+    return max(range_max(2 * node + 1, l, mid, ql, qr), range_max(2 * node + 2, mid + 1, r, ql, qr));
+  }
+
   void range_set(int node, int l, int r, int ql, int qr, long long val) {
     push(node, l, r);
     if (r < ql || qr < l) return;
